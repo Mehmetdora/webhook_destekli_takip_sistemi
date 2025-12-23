@@ -18,7 +18,9 @@ class WebhookService
             if (!$url) {
                 Log::error('WEBHOOK_URL is not set in .env', [
                     'Order Id' => $order->id,
-                    'Order No' => $order->order_no
+                    'Order No' => $order->order_no,
+                    'Order Status' => $order->status,
+
                 ]);
                 return false;
             }
@@ -37,6 +39,7 @@ class WebhookService
                 Log::error('HTTP request failed - server error', [
                     'Order Id' => $order->id,
                     'Order No' => $order->order_no,
+                    'Order Status' => $order->status,
                     'url' => $url,
                     'method' => 'POST',
                     'status' => $response->status(),
@@ -52,6 +55,7 @@ class WebhookService
                 Log::error('HTTP request failed - client error', [
                     'Order Id' => $order->id,
                     'Order No' => $order->order_no,
+                    'Order Status' => $order->status,
                     'url' => $url,
                     'method' => 'POST',
                     'status' => $response->status(),
@@ -64,7 +68,15 @@ class WebhookService
 
             return true;
         } catch (\Exception $error) {
-            Log::error('Webhook Service Error', ['error' => $error->getMessage()]);
+            Log::error(
+                'Webhook Service Error',
+                [
+                    'Order Id' => $order->id,
+                    'Order No' => $order->order_no,
+                    'Order Status' => $order->status,
+                    'error message' => $error->getMessage()
+                ]
+            );
             return false;
         }
     }
