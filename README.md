@@ -55,8 +55,10 @@ http://127.0.0.1:8000<hr>
 #### Sipariş Oluşturma:<br>
 POST /api/orders<br>
 {<br>
-  "customer_name": "Mehmet Dora",<br>
-  "total_price": 250.50<br>
+    "order_no": "333",<br>
+    "customer_name": "User1",<br>
+    "total_price": 999.99,<br>
+    "status": "cancelled"<br>
 }<br><br>
 #### Sipariş Listeleme:<br>
 GET /api/orders<br><br>
